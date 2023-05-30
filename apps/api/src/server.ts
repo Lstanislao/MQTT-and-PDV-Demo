@@ -40,16 +40,16 @@ interface IContext {
 }
 
 async function initSever() {
-  let connection: typeof mongoose | null = null;
+  const connection: typeof mongoose | null = null;
   try {
-    connection = await mongoose
-      .connect(String(process.env.DATABASE))
-      .then((conn) => {
-        console.log('Connected to database');
-        return conn;
-      });
+    // connection = await mongoose
+    //   .connect(String(process.env.DATABASE))
+    //   .then((conn) => {
+    //     console.log('Connected to database');
+    //     return conn;
+    //   });
 
-    mongoose.connection.on('error', (err) => `❌🤬❌🤬 ${err}`);
+    // mongoose.connection.on('error', (err) => `❌🤬❌🤬 ${err}`);
 
     const app = express();
 

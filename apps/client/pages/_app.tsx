@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { ApolloProvider } from '@apollo/client';
 import { SessionProvider } from 'next-auth/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   ThemeContextProvider,
   ToastContextProvider,
@@ -12,6 +13,8 @@ import {
 } from '../context';
 import { useApollo } from '../hooks';
 import '../style.css';
+
+const queryClient = new QueryClient();
 
 // @ts-expect-error err is not defined
 function MyApp({ Component, pageProps, err }: AppProps<any>) {
@@ -53,22 +56,24 @@ function MyApp({ Component, pageProps, err }: AppProps<any>) {
     }
   }, []);
   return (
-    <SessionProvider session={pageProps.session} refetchInterval={0}>
-      <ApolloProvider client={apolloClient}>
-        <>
-          <Head>
-            <title>Avila Tek | Template</title>
-          </Head>
-          <ThemeContextProvider>
-            <ToastContextProvider>
-              <UserContextProvider>
-                <Component {...pageProps} err={err} />
-              </UserContextProvider>
-            </ToastContextProvider>
-          </ThemeContextProvider>
-        </>
-      </ApolloProvider>
-    </SessionProvider>
+    <QueryClientProvider client={queryClient}>
+      <SessionProvider session={pageProps.session} refetchInterval={0}>
+        <ApolloProvider client={apolloClient}>
+          <>
+            <Head>
+              <title>Avila Tek | Template</title>
+            </Head>
+            <ThemeContextProvider>
+              <ToastContextProvider>
+                <UserContextProvider>
+                  <Component {...pageProps} err={err} />
+                </UserContextProvider>
+              </ToastContextProvider>
+            </ThemeContextProvider>
+          </>
+        </ApolloProvider>
+      </SessionProvider>
+    </QueryClientProvider>
   );
 }
 
