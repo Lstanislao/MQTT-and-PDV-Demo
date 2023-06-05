@@ -13,12 +13,14 @@ import {
 } from '../context';
 import { useApollo } from '../hooks';
 import '../style.css';
+import socket from '../lib/socket';
 
 const queryClient = new QueryClient();
 
 // @ts-expect-error err is not defined
 function MyApp({ Component, pageProps, err }: AppProps<any>) {
   const apolloClient = useApollo(pageProps.initialApolloState);
+
   React.useEffect(() => {
     Router.events.on('routeChangeStart', () => {
       NProgress.start();

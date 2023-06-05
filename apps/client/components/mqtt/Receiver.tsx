@@ -5,15 +5,15 @@ const Receiver = ({ payload }) => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    console.log(messages);
-    if (payload.topic) {
-      setMessages((_messages) => [..._messages, payload]);
+    console.log('payload recibido', payload);
+    if (payload.length > 0) {
+      setMessages(payload.map((data) => data));
     }
   }, [payload]);
 
   const renderListItem = (item) => (
     <List.Item>
-      <List.Item.Meta title={item.topic} description={item.message} />
+      <List.Item.Meta description={JSON.stringify(item.data)} />
     </List.Item>
   );
 
